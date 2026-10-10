@@ -10,12 +10,25 @@
     <div class="main">
         <div class="header">
             <div class="app_name">SAMRAJ EDITOR</div>
-            <input class="import_image" type="file">
-            <button class="save">SAVE</button>
+            <input class="import_image" id="import_image" type="file">
+            <button class="save" id="save">SAVE</button>
         </div>
         <div class="content">
             <div class="feature">
-                <button class="crop">CROP</button>
+
+                <div class="brightness_control">
+                    <label for="brightness">BRIGHTNESS</label>
+                    <input
+                        type="range"
+                        id="brightness"
+                        min="-100"
+                        max="100"
+                        value="0"
+                    >
+                    <span id="brightness_value">0</span>
+                </div>
+                <button class="filter" id="grayscale">GRAYSCALE</button>
+                <button class="crop" id="crop" >CROP</button>
                 <button class="resize">RESIZE</button>
                 <button class="rotate">ROTATE</button>
                 <button class="filter">FILTER</button>
@@ -24,7 +37,7 @@
                 <button class="add">ADD BACKGROUND</button>
                 <button class="remove">REMOVE BACKGROUND</button>
             </div>
-            <div class="image_preview">image  preview</div>
+            <div class="image_preview" id="image_preview" >image  preview</div>
         </div>
         <div class="footer">
             <button class="undo">UNDO</button>
@@ -33,5 +46,6 @@
             <button class="export">EXPORT</button>
         </div>
     </div>
+    <script src="./app.js"></script>
 </body>
 </html>

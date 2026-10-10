@@ -48,3 +48,23 @@
     justify-content:space-around;
     align-items: center;
 }
+
+#crop_canvas {
+    max-width: 100%;
+    /* check */
+    max-height: 70vh;
+    width:auto;
+    height:auto;
+    cursor:crosshair;
+    touch-action:none;
+    display:block;
+    margin: auto;
+}
+
+.crop_actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    
+}
