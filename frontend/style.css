@@ -68,3 +68,9 @@
     padding: 10px;
     
 }
+
+.rotateControl{
+    background-color: aqua;
+    width: 10px;
+    height: 10px;
+}
