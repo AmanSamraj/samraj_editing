@@ -56,7 +56,7 @@ function showImage(source) {
 
     try{
         const  response = await fetch(
-            "http://127.0.0.1:5500/process-image?operation=grayscale",
+            "http://127.0.0.1:5501/process-image?operation=grayscale",
             {
                 method:"POST",
                 body:formData
@@ -316,7 +316,7 @@ async function applyCrop() {
     try {
 
         const response = await fetch(
-            `http://127.0.0.1:5500/process-image?operation=crop&x=${x}&y=${y}&width=${width}&height=${height}`,
+            `http://127.0.0.1:5501/process-image?operation=crop&x=${x}&y=${y}&width=${width}&height=${height}`,
             {
                 method: "POST",
                 body: formData
@@ -348,32 +348,59 @@ async function applyCrop() {
 
 
 
-//  NEW — SAVE button select karo
+
 const saveButton = document.querySelector(".save");
 
-// 🟢 NEW — Button click event
-saveButton.addEventListener("click", function () {
+saveButton.addEventListener("click", async function () {
     const previewImage = document.querySelector("#image_preview img");
+    const previewCanvas = document.querySelector("#image_preview canvas");
 
-    // 🟢 NEW — Check karo image preview mein hai ya nahi
-    if (!previewImage || !previewImage.src) {
-        alert("Pehle image upload karo!");
-        return;
+    try {
+        let blob;
+
+        // Case 1: Crop canvas is displayed
+        if (previewCanvas) {
+            blob = await new Promise((resolve, reject) => {
+                previewCanvas.toBlob((result) => {
+                    if (result) resolve(result);
+                    else reject(new Error("Canvas export failed"));
+                }, "image/png");
+            });
+        }
+
+        // Case 2: Image is displayed
+        else if (previewImage && previewImage.complete &&
+                 previewImage.naturalWidth > 0) {
+
+            const response = await fetch(previewImage.src);
+
+            if (!response.ok) {
+                throw new Error("Could not read preview image");
+            }
+
+            blob = await response.blob();
+        }
+
+        else {
+            alert("Pehle image upload karo!");
+            return;
+        }
+
+        // Download the final preview
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "samraj-editor-image.png";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+    } catch (error) {
+        console.error("Save error:", error);
+        alert("Image save nahi hui. Browser console mein error check karo.");
     }
-
-    // 🟢 NEW — Image load hone ke baad download karo
-    if (!previewImage.complete || previewImage.naturalWidth === 0) {
-        alert("Image abhi load ho rahi hai. Dobara SAVE click karo.");
-        return;
-    }
-
-    const downloadLink = document.createElement("a");
-    downloadLink.href = previewImage.src;
-    downloadLink.download = "samraj-editor-image.jpg";
-
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    downloadLink.remove();
-
-    console.log("Save button clicked");
 });

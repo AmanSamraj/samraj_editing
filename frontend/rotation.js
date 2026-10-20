@@ -1,17 +1,17 @@
-const rotateButton = document.getElementById("rotate");
-const rotateControl =document.getElementById("rotateControl");
+const rotateButton = document.querySelector(".rotate");
+const rotateControl = document.getElementById("rotateControl");
 const rotateLeft = document.getElementById("rotateLeft");
 const rotateRight = document.getElementById("rotateRight");
 
 
 //ROTATION 
 let rotationAngle = 0;
-rotate.addEventListener("click",function(){
+rotateButton.addEventListener("click",function(){
     if(!image_preview.querySelector("img")){
         alert("please  select  image")
         return;
     }
-    rotation.hidden = !rotation.hidden
+    rotateControl.hidden = !rotateControl.hidden;
 
 });
 

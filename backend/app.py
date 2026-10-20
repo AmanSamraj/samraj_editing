@@ -2,10 +2,50 @@ from flask import Flask, request,send_file
 from flask_cors import CORS
 import cv2
 import  numpy  as  np
+from rembg import remove, new_session
+from io import BytesIO
 import io
+from flask import request, send_file, jsonify
+import time
 
+
+bg_session = new_session("u2net_human_seg")
 app =Flask(__name__)
 CORS(app)
+
+@app.route("/remove-background", methods=["POST"])
+def remove_background():
+    uploaded_file = request.files.get("image")
+
+    if not uploaded_file:
+        return jsonify({"error": "Please upload an image"}), 400
+
+    image_bytes = uploaded_file.read()
+
+    if not image_bytes:
+        return jsonify({"error": "Image is empty"}), 400
+
+    try:
+        start = time.perf_counter()
+
+        # Reuse the loaded model; keep alpha matting off initially
+        result = remove(
+            image_bytes,
+            session=bg_session
+        )
+
+        elapsed = time.perf_counter() - start
+        print(f"Background processing: {elapsed:.2f} seconds")
+
+        return send_file(
+            BytesIO(result),
+            mimetype="image/png",
+            download_name="background_removed.png"
+        )
+
+    except Exception as error:
+        app.logger.exception("Background removal failed")
+        return jsonify({"error": str(error)}), 500
 
 @app.get("/")
 def home():
@@ -80,5 +120,5 @@ def process_image():
     # }
 
 if __name__ =="__main__":
-    app.run(debug=True, port=5500)
+    app.run(debug=True, port=5501)
 

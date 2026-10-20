@@ -38,8 +38,41 @@
                 <button class="filter">FILTER</button>
                 <button class="blur">BLUR</button>
                 <button class="text">TEXT</button>
-                <button class="add">ADD BACKGROUND</button>
-                <button class="remove">REMOVE BACKGROUND</button>
+                <button>
+                <button class="add" id="add">ADD BACKGROUND</button>
+                <button class="remove" id="remove">REMOVE BACKGROUND</button>
+                <button class="replace" id="replace">REPLACE BACKGROUND</button>
+                <button class="add" id="add" type="button">
+    ADD BACKGROUND
+</button>
+
+<button class="remove" id="remove" type="button">
+    REMOVE BACKGROUND
+</button>
+
+<button class="replace" id="replace" type="button">
+    REPLACE BACKGROUND
+</button>
+
+<input
+    type="color"
+    id="background_color"
+    value="#ffffff"
+    title="Choose background color"
+>
+
+<input
+    type="file"
+    id="background_image"
+    accept="image/*"
+    hidden
+>
+<input
+    type="file"
+    id="background_image"
+    accept="image/*"
+>
+                </button>
             </div>
             <div class="image_preview" id="image_preview" >image  preview</div>
         </div>
@@ -49,8 +82,10 @@
             <button class="zoom">ZOOM</button>
             <button class="export">EXPORT</button>
         </div>
+
     </div>
     <script src="./app.js"></script>
     <script src="./rotation.js"></script>
+    <script src="./bg.js"></script>
 </body>
 </html>
