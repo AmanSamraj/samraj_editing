@@ -2,6 +2,8 @@ const imageInput = document.getElementById("import_image");
 const image_preview = document.getElementById("image_preview");
 const grayscaleButton = document.getElementById("grayscale");
 const cropButton = document.getElementById("crop");
+const brightnessInput = document.getElementById("brightness");
+const brightnessValue = document.getElementById("brightness_value");
 
 
 let selectedFile = null;
@@ -13,6 +15,10 @@ imageInput.addEventListener("change", function() {
     if(file){
 
         selectedFile = file;
+
+        brightnessInput.value = "0";
+        brightnessValue.value = "0";
+        brightnessValue.textContent = "0";
 
         showImage(file);
 
@@ -35,9 +41,20 @@ function showImage(source) {
     image.style.width = "96%";
     image.style.height = "96%";
     image.style.objectFit = "contain";
+    image.style.filter = `brightness(${1 + Number(brightnessInput.value) / 100})`;
 
     image_preview.replaceChildren(image);
 }
+
+brightnessInput.addEventListener("input", function () {
+    brightnessValue.value = this.value;
+    brightnessValue.textContent = this.value;
+
+    const previewImage = image_preview.querySelector("img");
+    if (previewImage) {
+        previewImage.style.filter = `brightness(${1 + Number(this.value) / 100})`;
+    }
+});
 
 
     //grayscale
