@@ -1,121 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f5f7fb">
-    <title>Samraj Editor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
 </head>
 <body>
-    <div class="app-shell">
-        <header class="topbar">
-            <a class="brand" href="#" aria-label="Samraj Editor home">
-                <span class="brand-mark" aria-hidden="true">S</span>
-                <span>SAMRAJ <b>EDITOR</b></span>
-            </a>
-            <div class="topbar-actions">
-                <label class="button button-secondary upload-button" for="import_image">
-                    <span aria-hidden="true">＋</span> Choose image
-                </label>
-                <input class="visually-hidden" id="import_image" type="file" accept="image/*">
-                <button class="button button-primary" id="save" type="button">
-                    <span aria-hidden="true">↓</span> Save image
+    <div class="main">
+        <div class="header">
+            <div class="app_name">SAMRAJ EDITOR</div>
+            <input class="import_image" id="import_image" type="file">
+            <button class="save" id="save">SAVE</button>
+        </div>
+        <div class="content">
+            <div class="feature">
+                <div class="brightness_control">
+                    <label for="brightness">BRIGHTNESS</label>
+                    <input type="range" id="brightness" min="-100" max="100" value="0">
+                    <span id="brightness_value">0</span>
+                </div>
+                <button class="filter" id="grayscale">GRAYSCALE</button>
+                <button class="crop" id="crop">CROP</button>
+                <button class="resize">RESIZE</button>
+                <button class="rotate">ROTATE</button>
+                <div id="rotateControl" hidden>
+                    <button id="rotateLeft">Rotate Left â†¶</button>
+                    <button id="rotateRight">Rotate Right â¤¸</button>
+                </div>
+                <button class="filter">FILTER</button>
+                <button class="blur">BLUR</button>
+                <button class="text">TEXT</button>
+                <button>
+                    <button class="add" id="add">ADD BACKGROUND</button>
+                    <button class="remove" id="remove">REMOVE BACKGROUND</button>
+                    <button class="replace" id="replace">REPLACE BACKGROUND</button>
+                    <button class="add" id="add" type="button">ADD BACKGROUND</button>
+                    <button class="remove" id="remove" type="button">REMOVE BACKGROUND</button>
+                    <button class="replace" id="replace" type="button">REPLACE BACKGROUND</button>
+                    <input type="color" id="background_color" value="#ffffff" title="Choose background color">
+                    <input type="file" id="background_image" accept="image/*" hidden>
+                    <input type="file" id="background_image" accept="image/*">
                 </button>
             </div>
-        </header>
-
-        <main class="workspace">
-            <aside class="toolbar" aria-label="Image editing tools">
-                <div class="toolbar-heading">
-                    <div>
-                        <p class="eyebrow">WORKSPACE</p>
-                        <h1>Quick tools</h1>
-                    </div>
-                    <span class="tool-count">TOOLS</span>
-                </div>
-
-                <section class="tool-section" aria-labelledby="adjust-heading">
-                    <h2 id="adjust-heading">Adjust</h2>
-                    <div class="brightness_control">
-                        <div class="range-heading">
-                            <label for="brightness">Brightness</label>
-                            <output id="brightness_value" for="brightness">0</output>
-                        </div>
-                        <input type="range" id="brightness" min="-100" max="100" value="0">
-                    </div>
-                    <div class="tool-grid">
-                        <button class="tool-button" id="grayscale" type="button"><span class="tool-icon">◐</span>Grayscale</button>
-                        <button class="tool-button" type="button"><span class="tool-icon">◈</span>Filter</button>
-                        <button class="tool-button" type="button"><span class="tool-icon">◌</span>Blur</button>
-                        <button class="tool-button" type="button"><span class="tool-icon">T</span>Add text</button>
-                    </div>
-                </section>
-
-                <section class="tool-section" aria-labelledby="transform-heading">
-                    <h2 id="transform-heading">Transform</h2>
-                    <div class="tool-grid">
-                        <button class="tool-button" id="crop" type="button"><span class="tool-icon">⌗</span>Crop</button>
-                        <button class="tool-button resize" type="button"><span class="tool-icon">↗</span>Resize</button>
-                        <button class="tool-button rotate" type="button"><span class="tool-icon">⟳</span>Rotate</button>
-                    </div>
-                    <div class="rotate-control" id="rotateControl" hidden>
-                        <button class="button button-secondary" id="rotateLeft" type="button">↶ Left</button>
-                        <button class="button button-secondary" id="rotateRight" type="button">↷ Right</button>
-                    </div>
-                </section>
-
-                <section class="tool-section background-section" aria-labelledby="background-heading">
-                    <h2 id="background-heading">Background</h2>
-                    <label class="field-label" for="background_color">Background color</label>
-                    <div class="color-field">
-                        <input type="color" id="background_color" value="#ffffff" aria-label="Choose background color">
-                        <span>Choose a color</span>
-                    </div>
-                    <label class="button button-secondary background-upload" for="background_image">＋ Use an image</label>
-                    <input class="visually-hidden" type="file" id="background_image" accept="image/*">
-                    <div class="background-actions">
-                        <button class="button button-secondary" id="remove" type="button">Remove</button>
-                        <button class="button button-primary" id="add" type="button">Add background</button>
-                        <button class="button button-secondary" id="replace" type="button">Replace</button>
-                    </div>
-                </section>
-                <p class="toolbar-note">Choose an image to get started. Your original stays on your device.</p>
-            </aside>
-
-            <section class="editor-panel" aria-label="Image preview">
-                <div class="editor-heading">
-                    <div>
-                        <p class="eyebrow">CANVAS</p>
-                        <h2>Your image</h2>
-                    </div>
-                    <span class="canvas-badge"><span></span> Ready to edit</span>
-                </div>
-                <div class="image_preview" id="image_preview">
-                    <div class="empty-state">
-                        <div class="empty-icon" aria-hidden="true">↑</div>
-                        <h3>Your canvas is ready</h3>
-                        <p>Choose an image to start editing. JPG, PNG and WebP supported.</p>
-                        <label class="button button-primary" for="import_image">Choose an image</label>
-                    </div>
-                </div>
-                <div class="canvas-footer">
-                    <span>PREVIEW</span>
-                    <span>Edits are ready to save anytime</span>
-                </div>
-                <div class="history-bar" aria-label="Edit history controls">
-                    <span class="history-label">HISTORY</span>
-                    <button class="history-button undo" type="button" disabled>↶ <span>Undo</span></button>
-                    <button class="history-button redo" type="button" disabled>↷ <span>Redo</span></button>
-                    <span class="history-spacer"></span>
-                    <button class="history-button zoom" type="button">⌕ <span>Zoom</span></button>
-                    <button class="history-button export" type="button">↗ <span>Export</span></button>
-                </div>
-            </section>
-        </main>
+            <div class="image_preview" id="image_preview">image preview</div>
+        </div>
+        <div class="footer">
+            <button class="undo">UNDO</button>
+            <button class="redo">REDO</button>
+            <button class="zoom">ZOOM</button>
+            <button class="export">EXPORT</button>
+        </div>
     </div>
     <script src="./app.js"></script>
     <script src="./rotation.js"></script>
